@@ -1,7 +1,7 @@
 import 'dotenv/config'
-import type { BusinessResponse } from '../types/business.js'
+import type { BusinessResponse } from '../types/business'
 
-export async function pullData(): Promise<BusinessResponse> {
+export async function getBusinesses(): Promise<BusinessResponse> {
     const url: string = 'https://graph.facebook.com/v25.0/me/businesses?limit=200'
     const token: string | undefined = process.env.BEARER_TOKEN
 

@@ -1,7 +1,7 @@
-import { sendBalance } from "../db/queries.js";
-import type { AccountInfo, AdAccountBalanceResponse, AdAccountsResponse, Business, BusinessResponse } from "../types/business.js";
-import { getAccountBalance } from "./getAccountBalance.js";
-import { getAdAccounts } from "./getAdAccounts.js"
+import { upsertBalance } from "../repositories/upsertBalance";
+import type { AccountInfo, AdAccountBalanceResponse, AdAccountsResponse, Business, BusinessResponse } from "../types/business";
+import { getAccountBalance } from "./getAccountBalance";
+import { getAdAccounts } from "./getAdAccounts"
 
 export async function loopOverBusinesses(data: BusinessResponse) {
     const businesses: Business[] = data.data
@@ -12,9 +12,9 @@ export async function loopOverBusinesses(data: BusinessResponse) {
         for (const account of accounts.data) {
             const accountData: AdAccountBalanceResponse = await getAccountBalance(account)
 
-            const balance: number = accountData.is_prepay_account ? Number(accountData.funding_source_details.display_string.match(/[\d.,]+/)?.[0]?.replace(/[.,]/g, '')) / 100 : Number(accountData.balance)
+            const raw: number = accountData.is_prepay_account ? Number(accountData.funding_source_details.display_string.match(/[\d.,]+/)?.[0]?.replace(/[.,]/g, '')) / 100 : Number(accountData.balance)
 
-            const brl: number = Number(balance.toFixed(2))
+            const brl: number = Number(raw.toFixed(2))
 
             console.log(brl)
 
@@ -24,7 +24,7 @@ export async function loopOverBusinesses(data: BusinessResponse) {
                 balance: brl
             }
 
-            balance !== 0 && await sendBalance(accountInfo)
+            raw !== 0 && await upsertBalance(accountInfo)
         }
     }
 }
