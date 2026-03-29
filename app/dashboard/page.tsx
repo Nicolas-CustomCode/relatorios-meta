@@ -16,7 +16,9 @@ export default function Dashboard() {
 
     return (
         <main className={styles.main}>
-            <Table data={businessList}></Table>
+            <div className={styles.tableContainer}>
+                <Table data={businessList}></Table>
+            </div>
             <button onClick={() => fetch('/api/sync-balances')}>Aaaa</button>
         </main>
     )
