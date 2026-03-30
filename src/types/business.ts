@@ -58,9 +58,9 @@ export type AccountInfo = {
 export type pgAccount = {
     id: string,
     name: string,
-    minimum: number,
+    minimum: number | null,
     balance: number,
     status: string,
     updated: string,
-    type?: string
+    type?: string | null
 }

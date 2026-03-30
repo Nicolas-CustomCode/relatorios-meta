@@ -2,7 +2,12 @@ import { pgAccount } from "@/src/types/business";
 import EditRow from "./EditRow";
 import styles from "@/src/styles/components/table.module.css"
 
-export default function EditTable({data}: {data: pgAccount[]}) {
+export default function EditTable({ data, onChange }: { data: pgAccount[], onChange: (updated: pgAccount[]) => void }) {
+    const handleRowChange = (updatedRow: pgAccount) => {
+        const newData = data.map(d => d.id === updatedRow.id ? updatedRow : d)
+        onChange(newData)
+    }
+
     return (
         <table className={styles.table}>
             <thead>
@@ -15,7 +20,7 @@ export default function EditTable({data}: {data: pgAccount[]}) {
             </thead>
             <tbody>
                 {data.map((account) => (
-                    <EditRow key={account.id} data={account}></EditRow>
+                    <EditRow key={account.id} data={account} onChange={handleRowChange}></EditRow>
                 ))}
             </tbody>
         </table>
