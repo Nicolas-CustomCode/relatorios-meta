@@ -13,10 +13,14 @@ export default function Dashboard() {
         a.name.localeCompare(b.name)
     ))
 
+    async function getBalances() {
+        const res = await fetch('/api/get-balances')
+        const data = await res.json()
+        setBusinessList(data)
+    }
+
     useEffect(() => {
-        fetch('/api/get-balances')
-            .then((r) => (r.json()))
-            .then(setBusinessList)
+        getBalances()
     }, [])
 
     async function updateBalances() {
@@ -24,11 +28,11 @@ export default function Dashboard() {
             setLoading(true)
 
             await fetch('/api/sync-balances')
+            await getBalances()
         }
         finally {
             setLoading(false)
         }
-
     }
 
     return (
@@ -42,7 +46,7 @@ export default function Dashboard() {
                 <div className={styles.tableContainer}>
                     <Table data={sortedList}></Table>
                 </div>
-                <Button variant="primary" onClick={updateBalances} disabled={loading}>Atualizar</Button>
+                <Button variant="primary" onClick={updateBalances} disabled={loading}>{loading ? 'Atualizando...' : 'Atualizar'}</Button>
             </section>
         </main>
     )

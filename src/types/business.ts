@@ -61,5 +61,6 @@ export type pgAccount = {
     minimum: number,
     balance: number,
     status: string,
-    updated: string
+    updated: string,
+    type?: string
 }

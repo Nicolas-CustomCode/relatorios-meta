@@ -23,7 +23,7 @@
 
 .table td {
     font: var(--font-body);
-    color: var(--text-body-light);
+    color: var(--text-title-light);
 }
 
 .table tbody tr:nth-child(even) {
