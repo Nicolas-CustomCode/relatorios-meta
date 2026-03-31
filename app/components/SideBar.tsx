@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
+import logo from '../../public/logo.png'
 import Link from 'next/link'
 
 export default function SideBar() {
@@ -22,9 +23,7 @@ export default function SideBar() {
     return (
         <aside className="h-screen w-64 fixed left-0 top-0 z-50 bg-surface-container-low dark:bg-slate-950 flex flex-col p-4 gap-2 shadow-[4px_0_24px_-4px_rgba(44,52,55,0.06)]">
             <div className="mb-8 px-2 flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-white">
-                    <span className="material-symbols-outlined" data-icon="analytics">analytics</span>
-                </div>
+                <img src={logo.src} alt="logo" className='w-10 h-10' />
                 <div>
                     <h1 className="font-black text-on-surface dark:text-white uppercase tracking-widest text-sm">RD System</h1>
                     <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">Painel de relatórios</p>
