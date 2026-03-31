@@ -1,4 +1,4 @@
-import type { AdAccountsResponse, Business } from "../types/business.js"
+import type { AdAccountsResponse, Business } from "../types/business"
 
 export async function getAdAccounts(data: Business): Promise<AdAccountsResponse> {
     const url: string = `https://graph.facebook.com/v25.0/${data.id}/owned_ad_accounts?limit=200`

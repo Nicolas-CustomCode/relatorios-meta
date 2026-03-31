@@ -1,0 +1,27 @@
+.aside {
+    width: 15dvw;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    border-right: 1px solid rgb(226, 226, 226);
+}
+
+.aside a {
+    width: 100%;
+    padding: 16px 0px;
+    text-align: center;
+    text-decoration: none;
+    font: var(--font-button);
+    color: var(--text-title-light);
+    border-radius: 8px;
+}
+
+.aside a:hover {
+    background-color: rgb(226, 226, 226);
+}
+
+.aside a.active {
+    background-color: var(--foreground);
+    color: var(--text-title-dark);
+}

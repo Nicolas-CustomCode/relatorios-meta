@@ -1,0 +1,42 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+
+export default function SideBar() {
+    const pathname = usePathname()
+
+    const navItems = [
+        { name: 'Dashboard', href: '/dashboard', icon: 'dashboard' },
+        { name: 'Edit', href: '/edit', icon: 'edit' },
+    ]
+
+    return (
+        <aside className="h-screen w-64 fixed left-0 top-0 z-50 bg-surface-container-low dark:bg-slate-950 flex flex-col p-4 gap-2 shadow-[4px_0_24px_-4px_rgba(44,52,55,0.06)]">
+            <div className="mb-8 px-2 flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-white">
+                    <span className="material-symbols-outlined" data-icon="analytics">analytics</span>
+                </div>
+                <div>
+                    <h1 className="font-black text-on-surface dark:text-white uppercase tracking-widest text-sm">Curator Pro</h1>
+                    <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">Enterprise Edition</p>
+                </div>
+            </div>
+            <nav className="flex-1 flex flex-col gap-1">
+                {navItems.map((item) => (
+                    <Link
+                        key={item.href + item.name}
+                        href={item.href}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${pathname === item.href
+                            ? 'bg-white dark:bg-slate-800 text-primary dark:text-white shadow-sm'
+                            : 'text-on-surface-variant dark:text-slate-400 hover:bg-surface-container-high dark:hover:bg-slate-800'
+                            }`}
+                    >
+                        <span className="material-symbols-outlined" data-icon={item.icon}>{item.icon}</span>
+                        <span className="font-medium text-sm tracking-wide">{item.name}</span>
+                    </Link>
+                ))}
+            </nav>
+        </aside>
+    )
+}

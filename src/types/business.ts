@@ -54,3 +54,14 @@ export type AccountInfo = {
     name: string,
     balance: number
 }
+
+export type pgAccount = {
+    id: string,
+    name: string,
+    minimum: number | null,
+    balance: number,
+    status: string,
+    updated: string,
+    type: string | null,
+    show: boolean
+}
