@@ -1,15 +1,23 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function SideBar() {
     const pathname = usePathname()
+    const router = useRouter()
+
+    if (pathname === '/login') return null
 
     const navItems = [
         { name: 'Dashboard', href: '/dashboard', icon: 'dashboard' },
         { name: 'Edit', href: '/edit', icon: 'edit' },
     ]
+
+    const handleLogout = async () => {
+        await fetch('/api/auth/logout', { method: 'POST' })
+        router.push('/login')
+    }
 
     return (
         <aside className="h-screen w-64 fixed left-0 top-0 z-50 bg-surface-container-low dark:bg-slate-950 flex flex-col p-4 gap-2 shadow-[4px_0_24px_-4px_rgba(44,52,55,0.06)]">
@@ -37,6 +45,15 @@ export default function SideBar() {
                     </Link>
                 ))}
             </nav>
+            <div className="mt-auto pt-4 border-t border-outline-variant/10">
+                <button 
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-slate-400 hover:bg-surface-container-high dark:hover:bg-slate-800 rounded-xl transition-all cursor-pointer"
+                >
+                    <span className="material-symbols-outlined" data-icon="logout">logout</span>
+                    <span className="font-medium text-sm tracking-wide">Logout</span>
+                </button>
+            </div>
         </aside>
     )
 }
