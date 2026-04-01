@@ -71,3 +71,10 @@ export type BmLead = {
     bm: string,
     total: number,
 }
+
+export type LeadData = {
+    id: string;
+    bm: string;
+    total: number;
+    date: string;
+}

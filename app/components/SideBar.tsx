@@ -12,7 +12,6 @@ export default function SideBar() {
 
     const navItems = [
         { name: 'Saldos', href: '/saldos', icon: 'account_balance' },
-        { name: 'Edit', href: '/saldos/edit', icon: 'edit' },
         { name: 'Leads', href: '/leads', icon: 'visibility' },
     ]
 

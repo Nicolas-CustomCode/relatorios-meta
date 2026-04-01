@@ -1,10 +1,8 @@
-import { pool } from "@/src/lib/db"
+import { getBalances } from "@/src/services/getBalances"
 import { NextResponse } from "next/server"
 
 export async function GET() {
-    const res = await pool.query(
-        `SELECT * FROM meta.balances`
-    )
+    const res = await getBalances()
 
-    return NextResponse.json(res.rows)
+    return NextResponse.json(res)
 }

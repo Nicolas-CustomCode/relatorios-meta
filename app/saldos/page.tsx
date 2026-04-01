@@ -3,6 +3,7 @@
 import { PgAccount } from "@/src/types/business"
 import { useEffect, useState } from "react"
 import Table from "../components/Table"
+import Link from "next/link"
 
 export default function Dashboard() {
     const [businessList, setBusinessList] = useState<PgAccount[]>([])
@@ -54,6 +55,13 @@ export default function Dashboard() {
                     <h1 className="text-4xl font-bold text-on-surface tracking-tight leading-none mb-2">Relatório de Saldos</h1>
                     <p className="text-on-surface-variant font-medium">Visão consolidada das contas e saúde financeira operacional.</p>
                 </div>
+                <Link 
+                    href="/saldos/edit"
+                    className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
+                >
+                    <span className="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+                    Editar Contas
+                </Link>
             </div>
 
             {/* Bento Metrics Grid */}
