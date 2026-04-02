@@ -82,13 +82,29 @@ export default function MensagensRow({ data, groups }: MensagensRowProps) {
 
             {/* Mensagem Input */}
             <td className="px-4 py-5">
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Sua mensagem..."
-                    className="w-full min-w-[200px] px-3 py-2 text-sm bg-surface-container-lowest border border-outline-variant/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-on-surface"
-                />
+                <div className="relative group min-w-[250px] bg-surface-container-lowest rounded-lg border border-outline-variant/30 overflow-hidden">
+                    {/* Highlighter Layer (Behind) */}
+                    <div 
+                        className="absolute inset-0 px-3 py-2 text-sm font-sans pointer-events-none whitespace-pre overflow-hidden"
+                        aria-hidden="true"
+                    >
+                        {message.split(/(\{\{leads\}\})/g).map((part, i) => (
+                            part === '{{leads}}' 
+                                ? <span key={i} className="text-primary bg-primary/20 rounded-sm outline outline-1 outline-primary/10">{part}</span>
+                                : <span key={i} className="text-on-surface">{part}</span>
+                        ))}
+                        {!message && <span className="text-on-surface-variant opacity-50">Sua mensagem...</span>}
+                    </div>
+                    {/* The actual Input Layer (Front) */}
+                    <input
+                        type="text"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Sua mensagem..."
+                        className="relative w-full px-3 py-2 text-sm font-sans bg-transparent border-none focus:ring-0 focus:outline-none text-transparent caret-on-surface placeholder:text-transparent"
+                        spellCheck={false}
+                    />
+                </div>
             </td>
 
             {/* Grupo Dropdown */}

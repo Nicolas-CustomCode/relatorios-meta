@@ -17,12 +17,8 @@ export async function GET() {
 
         let leadCount: number = 0
 
-        business.id === '681359605568422' && console.log(business)
-
         for (const account of accounts.data) {
             const leads = await getDailyLeads(account.id)
-
-            business.id === '681359605568422' && console.log('leads = ', leads.data?.[0]?.actions?.[0]?.value)
 
             leadCount += Number(leads.data?.[0]?.actions?.[0]?.value ?? 0)
         }

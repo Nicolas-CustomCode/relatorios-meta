@@ -31,7 +31,7 @@ export async function sendMessage(data: dbBusinessMessaging, initialLeads: numbe
     }
 
     const messageToSend = leads > 0
-        ? data.message.replace('{{leads}}', leads.toString())
+        ? data.message.replace('{{leads}}', leads.toString()).replace(/\\n/g, '\n')
         : data.format === 'semanal'
             ? `Bom dia, pessoal!
 
