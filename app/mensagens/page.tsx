@@ -98,16 +98,16 @@ function MessagingRow({ data, groups }: { data: dbBusinessMessaging, groups: Fet
                                     <X className="h-4 w-4" />
                                 </Button>
                             </div>
-                            <div className="relative h-40 bg-muted rounded-lg mb-4 border">
-                                <div className="absolute inset-0 p-4 whitespace-pre-wrap break-words pointer-events-none text-sm overflow-hidden text-foreground">
+                            <div className="relative h-40 bg-muted rounded-lg mb-4 border overflow-hidden">
+                                <div className="absolute inset-0 p-4 whitespace-pre-wrap break-words pointer-events-none text-sm leading-normal font-sans overflow-y-auto text-foreground">
                                     {renderFormattedMessage(message, false)}
                                 </div>
                                 <textarea
-                                    className="absolute inset-0 w-full h-full p-4 bg-transparent border-none text-transparent caret-foreground outline-none resize-none text-sm overflow-y-auto"
+                                    className="absolute inset-0 w-full h-full p-4 bg-transparent border-none text-transparent caret-foreground outline-none resize-none text-sm leading-normal font-sans overflow-y-auto"
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
                                     onScroll={(e) => {
-                                        const highlight = e.currentTarget.previousElementSibling;
+                                        const highlight = e.currentTarget.previousElementSibling as HTMLElement;
                                         if (highlight) highlight.scrollTop = e.currentTarget.scrollTop;
                                     }}
                                     placeholder="Sua mensagem..."
