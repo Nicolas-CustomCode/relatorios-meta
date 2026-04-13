@@ -7,8 +7,8 @@ export async function POST(req: Request) {
     const res: LeadsReq = await req.json()
 
     const data: LeadInfo = {
-        name: res.leads?.[0].name!,
-        phone: res.leads?.[0].personal_phone!
+        phone: res.leads?.[0].personal_phone!,
+        name: res.leads?.[0].name!
     }
 
     await upsertLeadInfo(data)
