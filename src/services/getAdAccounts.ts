@@ -1,6 +1,6 @@
-import type { AdAccountsResponse, Business } from "../types/business"
+import type { AdAccounts, AdAccountsResponse, Business } from "../types/business"
 
-export async function getAdAccounts(data: Business): Promise<AdAccountsResponse> {
+export async function getAdAccounts(data: Business): Promise<AdAccounts[]> {
     const url: string = `https://graph.facebook.com/v25.0/${data.id}/owned_ad_accounts?limit=200`
 
     try {
@@ -18,9 +18,7 @@ export async function getAdAccounts(data: Business): Promise<AdAccountsResponse>
 
         const data: AdAccountsResponse = await response.json()
 
-        // console.log('getAdAccounts =', data)
-
-        return data
+        return data.data
     }
     catch (error) {
         console.error((error as Error).message)

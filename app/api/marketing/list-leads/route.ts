@@ -1,12 +1,9 @@
-import { pool } from "@/src/lib/db";
+import { listRdStationLeads } from "@/src/repositories/listRdStationLeads";
 import { DbLeadRes } from "@/src/types/rdStation";
 import { NextResponse } from "next/server";
-import { QueryResult } from "pg";
 
 export async function GET() {
-    const data: QueryResult<DbLeadRes[]> = await pool.query(`
-        SELECT * FROM rdstation.leads
-    `)
+    const data: DbLeadRes[] = await listRdStationLeads()
 
-    return NextResponse.json(data.rows)
+    return NextResponse.json(data)
 }

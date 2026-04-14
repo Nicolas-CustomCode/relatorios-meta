@@ -18,12 +18,11 @@ export async function getAccountBalance(data: AdAccounts): Promise<AdAccountBala
 
         const json: AdAccountBalanceResponse = await response.json()
 
-        // console.log('getAccountBalance =', json)
-
         return json
     }
     catch (error) {
         console.error((error as Error).message)
+
         throw error
     }
 }

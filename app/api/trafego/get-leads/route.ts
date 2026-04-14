@@ -1,10 +1,11 @@
 import { insertLeads } from "@/src/repositories/insertLeads";
 import { listBusinesses } from "@/src/repositories/listBusinesses";
 import { listMessaging } from "@/src/repositories/listMessaging";
+import { formatMetaLeadsMessage } from "@/src/services/formatMetaLeadsMessage";
 import { getAdAccounts } from "@/src/services/getAdAccounts";
 import { getDailyLeads } from "@/src/services/getDailyLeads";
 import { sendMessage } from "@/src/services/sendMessage";
-import { AdAccountsResponse, BmLead } from "@/src/types/business";
+import { AdAccounts, BmLead } from "@/src/types/business";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -12,11 +13,11 @@ export async function GET() {
     const { combined: messagingConfigs } = await listMessaging()
 
     for (const business of businesses) {
-        const accounts: AdAccountsResponse = await getAdAccounts(business)
+        const accounts: AdAccounts[] = await getAdAccounts(business)
 
         let leadCount: number = 0
 
-        for (const account of accounts.data) {
+        for (const account of accounts) {
             const leads = await getDailyLeads(account.id)
 
             leadCount += Number(leads.data?.[0]?.actions?.[0]?.value ?? 0)
@@ -28,13 +29,14 @@ export async function GET() {
             total: leadCount
         }
 
-        // Save to DB
         await insertLeads(businessLeads)
 
-        // Find messaging config and send message
         const config = messagingConfigs.find(c => c.id === business.id)
         if (config) {
-            await sendMessage(config, leadCount)
+            const data = await formatMetaLeadsMessage(config, leadCount)
+            if (data.success && data.data) {
+                await sendMessage(data.data)
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { listLeads } from "@/src/repositories/listLeads";
+import { listLeads } from "@/src/repositories/listMetaLeads";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);

@@ -132,7 +132,7 @@ export default function RdStation() {
                             })}
                             {leadsList.length === 0 && !loading && (
                                 <TableRow>
-                                    <TableCell colSpan={4} className="px-6 py-8 text-center text-muted-foreground text-sm">
+                                    <TableCell colSpan={3} className="px-6 py-8 text-center text-muted-foreground text-sm">
                                         Nenhum lead encontrado para os filtros selecionados.
                                     </TableCell>
                                 </TableRow>
