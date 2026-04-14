@@ -18,7 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-type MensagensData = {
+type MessagesData = {
     combined: dbBusinessMessaging[]
     groups: FetchGroups[]
 }
@@ -52,14 +52,14 @@ function MessagingRow({ data, groups }: { data: dbBusinessMessaging, groups: Fet
     }
 
     const saveMutation = useMutation({
-        mutationFn: (payload: dbBusinessMessaging) => fetch('/api/upsert-messaging', {
+        mutationFn: (payload: dbBusinessMessaging) => fetch('/api/trafego/upsert-messaging', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         }),
         onSuccess: (_, payload) => {
             setPersistedData(payload)
-            queryClient.invalidateQueries({ queryKey: ['mensagens-data'] })
+            queryClient.invalidateQueries({ queryKey: ['list-messaging'] })
         }
     })
 
@@ -185,9 +185,9 @@ function SkeletonRow() {
 export default function Mensagens() {
     const queryClient = useQueryClient()
 
-    const { data, isLoading } = useQuery<MensagensData>({
-        queryKey: ['mensagens-data'],
-        queryFn: () => fetch('/api/mensagens-data').then(r => r.json()),
+    const { data, isLoading } = useQuery<MessagesData>({
+        queryKey: ['list-messaging'],
+        queryFn: () => fetch('/api/trafego/list-messaging').then(r => r.json()),
         staleTime: 2 * 60 * 1000, // 2 min cache
     })
 
@@ -195,8 +195,8 @@ export default function Mensagens() {
     const groups = data?.groups ?? []
 
     const syncMutation = useMutation({
-        mutationFn: () => fetch('/api/get-groups'),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['mensagens-data'] })
+        mutationFn: () => fetch('/api/trafego/get-groups'),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['list-messaging'] })
     })
 
     return (

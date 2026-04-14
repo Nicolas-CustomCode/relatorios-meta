@@ -1,7 +1,7 @@
 import { pool } from "../lib/db";
 import type { LeadInfo } from "../types/rdStation";
 
-export async function upsertLeadInfo(data:LeadInfo) {
+export async function upsertLead(data: LeadInfo) {
     await pool.query(`
         INSERT INTO rdstation.leads (phone, name)
         VALUES ($1, $2)

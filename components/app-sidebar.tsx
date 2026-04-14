@@ -46,7 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const handleSync = async () => {
     try {
       setIsSyncing(true)
-      const res = await fetch('/api/get-businesses')
+      const res = await fetch('/api/trafego/get-businesses')
       if (res.ok) {
         alert('BMs sincronizados com sucesso!')
         router.refresh()

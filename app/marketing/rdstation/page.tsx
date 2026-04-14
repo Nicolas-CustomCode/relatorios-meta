@@ -33,7 +33,7 @@ export default function RdStation() {
             const params = new URLSearchParams()
             // if (leadFilter) params.append('bm', leadFilter)
 
-            const res = await fetch(`/api/list-leads-info`)
+            const res = await fetch(`/api/marketing/list-leads`)
             const data = await res.json()
 
             setLeadsList(data)

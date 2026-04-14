@@ -52,7 +52,7 @@ export default function Saldos() {
     ))
 
     async function listBalances() {
-        const res = await fetch('/api/list-balances')
+        const res = await fetch('/api/trafego/list-balances')
         const data = await res.json()
         setBusinessList(data)
     }
@@ -62,7 +62,7 @@ export default function Saldos() {
     async function getBalances() {
         try {
             setLoading(true)
-            await fetch('/api/get-balances')
+            await fetch('/api/trafego/get-balances')
             await listBalances()
         }
         finally { setLoading(false) }

@@ -5,12 +5,11 @@ import { getAdAccounts } from "@/src/services/getAdAccounts";
 import { getDailyLeads } from "@/src/services/getDailyLeads";
 import { sendMessage } from "@/src/services/sendMessage";
 import { AdAccountsResponse, BmLead } from "@/src/types/business";
-import { dbBusinessMessaging } from "@/src/types/evolution";
 import { NextResponse } from "next/server";
 
 export async function GET() {
     const businesses = await listBusinesses()
-    const messagingConfigs: dbBusinessMessaging[] = await listMessaging()
+    const { combined: messagingConfigs } = await listMessaging()
 
     for (const business of businesses) {
         const accounts: AdAccountsResponse = await getAdAccounts(business)

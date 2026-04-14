@@ -7,6 +7,6 @@ export async function GET() {
         return NextResponse.json(data)
     } catch (error) {
         console.error(error)
-        return NextResponse.json([])
+        return NextResponse.json({ combined: [], groups: [] }, { status: 500 })
     }
 }

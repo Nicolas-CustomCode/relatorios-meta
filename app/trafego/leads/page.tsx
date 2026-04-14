@@ -35,7 +35,7 @@ export default function Leads() {
             if (endDate) params.append('endDate', endDate)
             if (bmFilter) params.append('bm', bmFilter)
 
-            const res = await fetch(`/api/list-leads?${params.toString()}`)
+            const res = await fetch(`/api/trafego/list-leads?${params.toString()}`)
             const data = await res.json()
             setLeadsList(data)
         } catch (error) {

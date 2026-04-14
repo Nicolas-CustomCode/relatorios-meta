@@ -76,7 +76,7 @@ export default function EditContas() {
     const sortedList = [...businessList].sort((a, b) => a.name.localeCompare(b.name))
 
     async function listBalances() {
-        const res = await fetch('/api/list-balances')
+        const res = await fetch('/api/trafego/list-balances')
         const data = await res.json()
         setBusinessList(data)
     }
@@ -86,7 +86,7 @@ export default function EditContas() {
     async function upsertAccounts() {
         setLoading(true)
         try {
-            await fetch('/api/upsert-accounts', {
+            await fetch('/api/trafego/upsert-accounts', {
                 method: 'POST',
                 body: JSON.stringify(businessList)
             })
