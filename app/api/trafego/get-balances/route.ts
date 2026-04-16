@@ -24,7 +24,7 @@ export async function GET() {
                 balance: brl
             }
 
-            upsertBalance(data)
+            await upsertBalance(data)
         }
     }
 
