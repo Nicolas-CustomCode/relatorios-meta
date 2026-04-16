@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         name
     }
 
-    upsertLead(data)
+    await upsertLead(data)
 
     return NextResponse.json({ ok: true })
 }

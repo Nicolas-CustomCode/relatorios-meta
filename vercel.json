@@ -1,11 +1,11 @@
 {
     "crons": [
         {
-            "path": "/api/get-leads",
+            "path": "/api/trafego/get-leads",
             "schedule": "0 11 * * *"
         },
         {
-            "path": "/api/get-balances",
+            "path": "/api/trafego/get-balances",
             "schedule": "0 11 * * *"
         }
     ]
