@@ -9,7 +9,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Loader2 } from "lucide-react"
+import { Loader2, ChevronLeft, ChevronRight, Users } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import type { DbLeadRes } from "@/src/types/rdStation"
 
 export default function RdStation() {
@@ -21,6 +22,8 @@ export default function RdStation() {
 
     const [leadsList, setLeadsList] = useState<DbLeadRes[]>([])
     const [loading, setLoading] = useState<boolean>(false)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const ITEMS_PER_PAGE = 50
 
     // Filters
     const [startDate, setStartDate] = useState<string>(defaultDate)
@@ -57,9 +60,8 @@ export default function RdStation() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* <MetricCard title="Total de Leads" value={totalLeads} icon={<Users className="h-5 w-5" />} /> */}
-                {/* <MetricCard title="Registros Exibidos" value={leadsList.length.toString().padStart(2, '0')} icon={<List className="h-5 w-5" />} /> */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <MetricCard title="Total de Leads" value={leadsList.length} icon={<Users className="h-5 w-5" />} />
             </div>
 
             <div className="bg-card border rounded-xl shadow-sm overflow-hidden">
@@ -78,7 +80,7 @@ export default function RdStation() {
                             />
                         </div> */}
 
-                        <div className="flex items-center gap-2">
+                        {/* <div className="flex items-center gap-2">
                             <div className="flex flex-col gap-1">
                                 <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">De</label>
                                 <input
@@ -98,7 +100,7 @@ export default function RdStation() {
                                     className="bg-muted focus:ring-1 focus:ring-primary transition-all text-xs px-4 py-2 rounded-lg outline-none"
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -112,7 +114,7 @@ export default function RdStation() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {leadsList.map((lead, index) => {
+                            {leadsList.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE).map((lead, index) => {
                                 const formattedDate = new Date(lead.created_at).toLocaleDateString('pt-BR', {
                                     day: '2-digit',
                                     month: '2-digit',
@@ -143,21 +145,53 @@ export default function RdStation() {
                         </div>
                     )}
                 </div>
+
+                {leadsList.length > 0 && (
+                    <div className="px-6 py-4 border-t flex items-center justify-between">
+                        <p className="text-sm text-muted-foreground">
+                            Mostrando <span className="font-medium text-foreground">{((currentPage - 1) * ITEMS_PER_PAGE) + 1}</span> a{' '}
+                            <span className="font-medium text-foreground">
+                                {Math.min(currentPage * ITEMS_PER_PAGE, leadsList.length)}
+                            </span>{' '}
+                            de <span className="font-medium text-foreground">{leadsList.length}</span> resultados
+                        </p>
+                        <div className="flex items-center gap-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1 || loading}
+                            >
+                                <ChevronLeft className="h-4 w-4 mr-1" />
+                                Anterior
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(leadsList.length / ITEMS_PER_PAGE)))}
+                                disabled={currentPage >= Math.ceil(leadsList.length / ITEMS_PER_PAGE) || loading}
+                            >
+                                Próxima
+                                <ChevronRight className="h-4 w-4 ml-1" />
+                            </Button>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )
 }
 
-// function MetricCard({ title, value, icon }: { title: string, value: string | number, icon: React.ReactNode }) {
-//     return (
-//         <div className="bg-card border p-6 rounded-xl shadow-sm">
-//             <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4">{title}</p>
-//             <div className="flex items-center justify-between">
-//                 <h3 className="text-4xl font-black">{value}</h3>
-//                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-//                     {icon}
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
+function MetricCard({ title, value, icon }: { title: string, value: string | number, icon: React.ReactNode }) {
+    return (
+        <div className="bg-card border p-6 rounded-xl shadow-sm">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4">{title}</p>
+            <div className="flex items-center justify-between">
+                <h3 className="text-4xl font-black">{value}</h3>
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                    {icon}
+                </div>
+            </div>
+        </div>
+    )
+}
